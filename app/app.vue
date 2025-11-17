@@ -27,14 +27,15 @@ body {
   background-image: url('/bg.jpg');
   background-position: center;
   background-size: cover;
+  background-attachment: fixed;
   font-size: 18px;
   width: 100%;
   height: 100dvh;
-  overflow: hidden;
+  overflow: auto;
 }
 
 #app-wrapper {
-  padding: 50px;
+  padding: 50px 10px;
 }
 
 #parent-wrapper {
@@ -47,6 +48,25 @@ body {
   flex-direction: column;
   align-items: center;
   border-radius: 25px;
+}
+
+.quest-done:hover {
+  cursor:pointer;
+}
+
+.quest-done a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input {
+  border: 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: 0;
 }
 
 </style>
