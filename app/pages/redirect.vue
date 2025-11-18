@@ -1,0 +1,29 @@
+<template>
+
+</template>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'nuxt/app';
+const route = useRoute()
+
+onMounted(async () => {
+
+    const res = await $fetch(localStorage.getItem('token_endpoint'), {
+    method: "POST",
+    body: JSON.stringify({
+        grant_type: "authorization_code",
+        client_id: "https://quest.howeverina.studio/login",
+        redirect_uri: "https://quest.howeverina.studio/redirect",
+        scope: "read:account write:notes read:reactions",
+        code: route.query.code,
+        code_verifier: localStorage.getItem('code_verifier'),
+    }),
+    headers: {
+        "Content-Type": "application/json"
+    }
+    });
+
+    localStorage.setItem('accessToken', res.access_token)
+    location.href="https://quest.howeverina.studio"
+})
+</script>

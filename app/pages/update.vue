@@ -4,21 +4,11 @@
             <div>내가 가진 포인트 <span class="quest-done"><NuxtLink :to=linkto()>내역</NuxtLink></span></div>
             <div style="font-size: 4rem;">🪙 {{myPoint}}</div>
         </div>
-        <div id="out-wrapper">
-            <div id="out-items-wrapper">
-                <div class="quest-category">
-                    <h3>소모하기</h3>
-                </div>
-                <div class="quest-item">
-                    <input v-model="title" class="quest-title" placeholder="항목"/>
-                    <input v-model="spendPoint" class="quest-point" placeholder="금액"/>
-                    <div class="quest-done" v-on:click="spendNote(title, spendPoint)">소모</div>
-                </div>
-            </div>
-        </div>
         <div id="quest-wrapper">
             <h2>🌸 내 퀘스트 🌸</h2>
-            <span class="quest-button"><NuxtLink to="/update/">목록 수정하기</NuxtLink></span>
+            <textarea v-model="list" id="quest-list" />
+            <span class="quest-button"><NuxtLink to="https://quest.howeverina.studio/">돌아가기</NuxtLink></span><span class="quest-button" v-on:click="sendListNote(list)">수정완료</span>
+            <h2>🌸 미리보기 🌸</h2>
             <div id="quest-items-wrapper">
                 <div v-for="quest in questList" class="quest-items">
                     <div v-if="quest[0] !== '-'" class="quest-category">
@@ -31,7 +21,7 @@
                         <div class="quest-point">
                             {{parseQuestItem(quest).point}}
                         </div>
-                        <div class="quest-done" v-on:click="sendNote(quest)">완료</div>
+                        <div class="quest-done">완료</div>
                     </div>
                 </div>
             </div>
@@ -52,8 +42,7 @@ const pending = ref(true); // "로딩 중"을 먼저 보여주기 위해 true로
 const error = ref(null);
 
 const route = useRoute()
-var title = ''
-var spendPoint = 0
+var list = ''
 
 const accessToken = ref(null)
 
@@ -69,8 +58,7 @@ const parseQuestItem = function (quest) {
     return data
 }
 
-
-const sendNote = async function (quest) {
+const sendListNote = async function (text) {
     
     await $fetch(`https://${localStorage.getItem('host')}/api/notes/create`, {
         method: "POST",
@@ -80,42 +68,24 @@ const sendNote = async function (quest) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            text: `🌸 #dailyquest 에서 ${parseQuestItem(quest).title} 을(를) 완료하고 ${parseQuestItem(quest).point} 포인트를 벌었어요!\n소지 포인트: 🪙 ${myPoint.value + parseQuestItem(quest).point}\n#${username.value}_dailyquest`,
-            visibility: 'followers'
+            text: `${username.value}의 #dailyquest 예요!\n#${username.value}_dq_list\n\`\`\`\n${text}\n\`\`\``,
+            visibility: 'specified'
         }),
     })
 
-    reloadNuxtApp();
-}
-
-const spendNote = async function (title, point) {
-    
-    await $fetch(`https://${localStorage.getItem('host')}/api/notes/create`, {
-        method: "POST",
-        server: false,
-        headers: {
-            "Authorization": `Bearer ${accessToken.value}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            text: `🪽 #dailyquest 에서 ${title} 을(를) 목적으로 ${point} 포인트를 소모했어요!\n소지 포인트: 🪙 ${myPoint.value - point}\n#${username.value}_dailyquest`,
-            visibility: 'followers'
-        }),
-    })
-
-    reloadNuxtApp();
+    location.href="https://quest.howeverina.studio/";
 }
 
 onMounted(async () => {
 
 accessToken.value = localStorage.getItem('accessToken')?localStorage.getItem('accessToken'):route.query.at?route.query.at:''
 
-if (!localStorage.getItem('host')) {
+if (!accessToken) {
     // 토큰이 없으면 요청을 보내지 않고 상태를 업데이트합니다.
     error.value = new Error('URL에 accessToken이 없습니다.');
     pending.value = false;
-    location.href="https://quest.howeverina.studio/login/"
-} else {
+    return;
+  }
 
 const iValue = await $fetch(`https://${localStorage.getItem('host')}/api/i`, {
         method: "POST",
@@ -147,7 +117,12 @@ const questRaw = lastNotesValue[0]?.text.split('```\n')[1]?.split('\n```')[0]
 const questListValue = questRaw?.split('\n')
 
 questList.value = questListValue
+list = questListValue?questListValue.join('\n'):'카테고리\n- 항목1: 100포인트'
 
+document.querySelector('#quest-list').addEventListener('input', (e)=>{
+    console.log('dd')
+    questList.value = e.target.value.split('\n')
+})
 
 let lastRecordsValue = await $fetch(`https://${localStorage.getItem('host')}/api/notes/search-by-tag`, {
         method: "POST",
@@ -169,8 +144,6 @@ myPoint.value = 0
 if (lastRecordsValue.length !== 0) {
     myPoint.value = parseInt(lastRecordsValue[0].text.split('포인트: 🪙 ')[1].split('\n')[0])
 }
-}
-
 })
 
 </script>
@@ -241,6 +214,7 @@ if (lastRecordsValue.length !== 0) {
 }
 
 .quest-button {
+    margin: 10px 0;
     padding: 7px;
     background-color: pink;
     border-radius: 7px;

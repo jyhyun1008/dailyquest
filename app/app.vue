@@ -54,19 +54,24 @@ body {
   cursor:pointer;
 }
 
-.quest-done a {
+.quest-done a, .quest-button a {
   text-decoration: none;
   color: inherit;
 }
 
-input {
+input, textarea {
   border: 0;
   padding: 10px;
   border-radius: 5px;
 }
 
-input:focus {
+input:focus, textarea:focus {
   outline: 0;
+}
+
+textarea {
+  width: 100%;
+  height: 300px;
 }
 
 </style>

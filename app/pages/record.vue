@@ -1,11 +1,12 @@
 <template>
     <div id="parent-wrapper">
         <div id="point-wrapper">
-            <div>내가 가진 포인트 <span class="quest-done"><NuxtLink :to=linkto(accessToken)>돌아가기</NuxtLink></span></div>
+            <div>내가 가진 포인트 <span class="quest-done"><NuxtLink :to=linkto()>돌아가기</NuxtLink></span></div>
             <div style="font-size: 4rem;">🪙 {{myPoint}}</div>
         </div>
         <div id="quest-wrapper">
             <h2>🌸 내역 🌸</h2>
+            <div>최대 100건까지 보여집니다.</div>
             <div id="quest-items-wrapper">
                 <div class="quest-titles">
                     <div class="quest-item">
@@ -38,7 +39,7 @@
 import { useRoute } from 'nuxt/app';
 
 const route = useRoute()
-const accessToken = route.query.at?route.query.at:''
+const accessToken = ref(null)
 
 const i = ref(null);
 const username = ref(null);
@@ -47,8 +48,8 @@ let myPoint = ref(null)
 const pending = ref(true); // "로딩 중"을 먼저 보여주기 위해 true로 시작
 const error = ref(null);
 
-const linkto = function (accessToken) {
-    return `/?at=${accessToken}`
+const linkto = function () {
+    return `/`
 }
 
 const parseRecordItem = function (record) {
@@ -74,6 +75,8 @@ const parseRecordItem = function (record) {
 
 onMounted(async () => {
 
+accessToken.value = localStorage.getItem('accessToken')?localStorage.getItem('accessToken'):route.query.at?route.query.at:''
+
 if (!accessToken) {
     // 토큰이 없으면 요청을 보내지 않고 상태를 업데이트합니다.
     error.value = new Error('URL에 accessToken이 없습니다.');
@@ -81,11 +84,11 @@ if (!accessToken) {
     return;
   }
 
-const iValue = await $fetch('https://stella.place/api/i', {
+const iValue = await $fetch(`https://${localStorage.getItem('host')}/api/i`, {
         method: "POST",
         server: false,
         headers: {
-            "Authorization": `Bearer ${accessToken}`,
+            "Authorization": `Bearer ${accessToken.value}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -96,11 +99,11 @@ username.value = iValue.username
 i.value = iValue
 
 
-let lastRecordsValue = await $fetch('https://stella.place/api/notes/search-by-tag', {
+let lastRecordsValue = await $fetch(`https://${localStorage.getItem('host')}/api/notes/search-by-tag`, {
         method: "POST",
         server: false,
         headers: {
-            "Authorization": `Bearer ${accessToken}`,
+            "Authorization": `Bearer ${accessToken.value}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
