@@ -18,7 +18,10 @@
         </div>
         <div id="quest-wrapper">
             <h2>🌸 내 퀘스트 🌸</h2>
-            <span class="quest-button"><NuxtLink to="/update/">목록 수정하기</NuxtLink></span>
+            <div class="button-flex">
+                <span class="quest-button"><NuxtLink to="/update/">목록 수정하기</NuxtLink></span>
+                <span class="quest-button" v-on:click="logOut()">로그아웃</span>
+            </div>
             <div id="quest-items-wrapper">
                 <div v-for="quest in questList" class="quest-items">
                     <div v-if="quest[0] !== '-'" class="quest-category">
@@ -86,6 +89,14 @@ const sendNote = async function (quest) {
     })
 
     reloadNuxtApp();
+}
+
+const logOut = function() {
+    if (window.confirm("로그아웃하시겠습니까?")) {
+        
+        localStorage.clear()
+        location.href="https://quest.howeverina.studio/login"
+    }
 }
 
 const spendNote = async function (title, point) {
@@ -245,4 +256,5 @@ if (lastRecordsValue.length !== 0) {
     background-color: pink;
     border-radius: 7px;
 }
+
 </style>

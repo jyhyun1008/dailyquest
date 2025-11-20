@@ -7,7 +7,10 @@
         <div id="quest-wrapper">
             <h2>🌸 내 퀘스트 🌸</h2>
             <textarea v-model="list" id="quest-list" />
-            <span class="quest-button"><NuxtLink to="https://quest.howeverina.studio/">돌아가기</NuxtLink></span><span class="quest-button" v-on:click="sendListNote(list)">수정완료</span>
+            <div class="button-flex">
+                <span class="quest-button"><NuxtLink to="https://quest.howeverina.studio/">돌아가기</NuxtLink></span>
+                <span class="quest-button" v-on:click="sendListNote(list)">수정완료</span>
+            </div>
             <h2>🌸 미리보기 🌸</h2>
             <div id="quest-items-wrapper">
                 <div v-for="quest in questList" class="quest-items">

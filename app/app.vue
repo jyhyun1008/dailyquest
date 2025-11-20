@@ -74,4 +74,10 @@ textarea {
   height: 300px;
 }
 
+
+.button-flex {
+    display: flex;
+    gap: 10px;
+}
+
 </style>
