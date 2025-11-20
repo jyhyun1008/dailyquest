@@ -9,9 +9,12 @@
 
     <div id="parent-wrapper">
         <div id="quest-wrapper">
-        <h3>서버 주소를 입력해주세요.</h3>
-        <input v-model="hostUrl" placeholder="서버 주소"></input>
-        <div class="quest-done" v-on:click="fetchServer(hostUrl)">로그인</div>
+            <h3>서버 주소를 입력해주세요.</h3>
+            <input v-model="hostUrl" placeholder="서버 주소"></input>
+            <div class="button-flex">
+                <span class="quest-button"><NuxtLink to="/about/">소개</NuxtLink></span>
+                <span class="quest-button" v-on:click="fetchServer(hostUrl)">로그인</span>
+            </div>
         </div>
     </div>
 

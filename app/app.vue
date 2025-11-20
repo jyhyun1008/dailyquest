@@ -50,7 +50,14 @@ body {
   border-radius: 25px;
 }
 
-.quest-done:hover {
+.quest-button {
+    margin: 10px 0;
+    padding: 7px;
+    background-color: pink;
+    border-radius: 7px;
+}
+
+.quest-done:hover, .quest-button:hover {
   cursor:pointer;
 }
 
@@ -74,8 +81,8 @@ textarea {
   height: 300px;
 }
 
-
 .button-flex {
+    justify-content: center;
     display: flex;
     gap: 10px;
 }

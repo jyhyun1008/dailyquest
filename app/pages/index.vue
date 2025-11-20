@@ -19,6 +19,7 @@
         <div id="quest-wrapper">
             <h2>🌸 내 퀘스트 🌸</h2>
             <div class="button-flex">
+                <span class="quest-button"><NuxtLink to="/about/">소개</NuxtLink></span>
                 <span class="quest-button"><NuxtLink to="/update/">목록 수정하기</NuxtLink></span>
                 <span class="quest-button" v-on:click="logOut()">로그아웃</span>
             </div>

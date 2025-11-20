@@ -216,10 +216,4 @@ if (lastRecordsValue.length !== 0) {
     border-radius: 7px;
 }
 
-.quest-button {
-    margin: 10px 0;
-    padding: 7px;
-    background-color: pink;
-    border-radius: 7px;
-}
 </style>
