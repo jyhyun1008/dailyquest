@@ -8,7 +8,7 @@
     <div id="parent-wrapper">
         <div id="quest-wrapper">
             <h1>DailyQuest 소개</h1>
-            <div class="quest-text">DailyQuest는 ADHD 당사자가 직접 사용하기 위해 만든, 태스크를 즉각적인 보상으로 전환하며, 금전 지출을 제한하는 동기부여를 제공합니다. ADHD 당사자들을 대상으로 하지만, 의학적인 근거는 없습니다.</div>
+            <div class="quest-text">DailyQuest는 ADHD 당사자가 직접 사용하기 위해 만든, 태스크를 즉각적인 보상으로 전환하며, 금전 지출을 제한하는 동기부여를 제공하는 웹앱입니다. ADHD 당사자들을 대상으로 하지만, 의학적인 근거는 없습니다.</div>
             <h2>Misskey 기반</h2>
             <div class="quest-text">DailyQuest는 <NuxtLink to="https://misskey-hub.net/ko/">Misskey</NuxtLink>의 노트와 연동됩니다. 본 웹사이트는 별도의 데이터베이스 서버를 운영하지 않으며, 모든 정보는 자신의 Misskey 계정에 노트로 저장됩니다.</div>
             <div class="quest-text">따라서, #dailyquest 태그가 달린 노트를 지우면 본 페이지에서의 기록도 함께 지워지게 되니, 노트를 청소하실 때 유의해 주세요.</div>
