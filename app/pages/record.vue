@@ -10,7 +10,7 @@
             <div id="quest-items-wrapper">
                 <div class="quest-titles">
                     <div class="quest-item">
-                        <div class="quest-point">
+                        <div class="quest-date">
                             일자
                         </div>
                         <div class="quest-title">
@@ -24,7 +24,7 @@
                 </div>
                 <div v-for="record in lastRecords" class="quest-items">
                     <div class="quest-item">
-                        <div class="quest-point">
+                        <div class="quest-date">
                             {{parseRecordItem(record).date}}
                         </div>
                         <div class="quest-title">
@@ -179,6 +179,10 @@ if (lastRecordsValue.length !== 0) {
     border-radius: 10px;
     padding: 10px;
     border: 1px solid #00000022;
+}
+
+.quest-date {
+    flex-grow: 1;
 }
 
 .quest-title {
