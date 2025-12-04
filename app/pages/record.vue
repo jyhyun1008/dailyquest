@@ -65,14 +65,14 @@ const parseRecordItem = function (record) {
             title: record.text.split('quest 에서 ')[1]?.split('을(를)')[0],
             point: parseInt(record.text.split('을(를) 완료하고')[1]?.split(' 포인트를 벌었어요')[0]),
             final: parseInt(record.text.split('포인트: 🪙 ')[1]?.split('\n')[0]),
-            date: record.createdAt
+            date: record.createdAt.split('T')[0]
         }
     } else if (record.text.split(' #')[0] == '🪽') {
         data = {
             title: record.text.split('quest 에서 ')[1]?.split('을(를)')[0],
             point: -1*parseInt(record.text.split('을(를) 목적으로')[1]?.split(' 포인트를 소모했어요')[0]),
             final: parseInt(record.text.split('포인트: 🪙 ')[1]?.split('\n')[0]),
-            date: record.createdAt
+            date: record.createdAt.split('T')[0]
         }
     } else {
         data = {title: "", point: 0, final: 0, date: ''}
