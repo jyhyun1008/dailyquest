@@ -115,7 +115,8 @@ let lastRecordsValue = await $fetch(`https://${localStorage.getItem('host')}/api
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            tag: `${username.value}_dailyquest`
+            tag: `${username.value}_dailyquest`,
+            limit: 100
         }),
     })
 
