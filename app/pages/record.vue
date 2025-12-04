@@ -182,7 +182,7 @@ if (lastRecordsValue.length !== 0) {
 }
 
 .quest-date {
-    flex-grow: 1;
+    width: 8rem;
 }
 
 .quest-title {
